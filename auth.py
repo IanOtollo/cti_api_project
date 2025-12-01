@@ -1,3 +1,4 @@
+import os
 from fastapi import Header, HTTPException, Depends
 from sqlalchemy.orm import Session
 from database import SessionLocal
@@ -16,10 +17,10 @@ def verify_api_key(authorization: str = Header(...), db: Session = Depends(get_d
     
     token = authorization.replace("Bearer ", "")
     
-    # Use the correct column for your API key storage
-    user = db.query(User).filter(User.api_key == token).first()  
+    env_api_key = os.environ.get("DEMO_API_KEY")
     
-    if not user:
+    if token != env_api_key:
         raise HTTPException(status_code=401, detail="Invalid API key")
     
+    user = db.query(User).filter(User.api_key == token).first()
     return user
