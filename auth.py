@@ -15,7 +15,9 @@ def verify_api_key(authorization: str = Header(...), db: Session = Depends(get_d
         raise HTTPException(status_code=401, detail="Invalid authorization header")
     
     token = authorization.replace("Bearer ", "")
-    user = db.query(User).filter(User.api_key == token).first()
+    
+    # Use the correct column for your API key storage
+    user = db.query(User).filter(User.api_key == token).first()  
     
     if not user:
         raise HTTPException(status_code=401, detail="Invalid API key")
