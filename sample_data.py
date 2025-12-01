@@ -1,18 +1,22 @@
-from database import engine, Base, SessionLocal
-from models import User
-import hashlib
-
+from database import SessionLocal, engine
+from models import Base, User, Source
 
 Base.metadata.create_all(bind=engine)
 
-
 db = SessionLocal()
-api_key = "demo-key-CHANGE_ME"
-api_hash = hashlib.sha256(api_key.encode()).hexdigest()
-if not db.query(User).filter(User.username=="demo").first():
-    user = User(username="demo", api_key_hash=api_hash)
-    db.add(user)
-    db.commit()
-    
+
+if not db.query(User).first():
+    demo_user = User(username="demo", api_key="demo-key-CHANGE_ME")
+    db.add(demo_user)
+
+if not db.query(Source).first():
+    sources_list = [
+        Source(name="Source 1", description="Description 1"),
+        Source(name="Source 2", description="Description 2")
+    ]
+    db.add_all(sources_list)
+
+db.commit()
 db.close()
-print("Demo API key:", api_key)
+
+print("Sample data created. Demo API key: demo-key-CHANGE_ME")
