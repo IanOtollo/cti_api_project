@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
+
 from api.database import SessionLocal
 from api.models import Source, User
 from api.auth import verify_api_key
@@ -18,5 +19,8 @@ def root():
     return {"message": "CTI API is running on Vercel"}
 
 @app.get("/sources")
-def get_sources(db: Session = Depends(get_db), current_user: User = Depends(verify_api_key)):
+def get_sources(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(verify_api_key)
+):
     return db.query(Source).all()
