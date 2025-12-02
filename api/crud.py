@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import Indicator, Source, User
+from api.models import Indicator, Source, User
 from typing import Optional
 
 def create_source_if_not_exists(db: Session, name: str):

@@ -1,6 +1,6 @@
 import os
-from database import SessionLocal, engine
-from models import Base, User, Source
+from api.database import SessionLocal, engine
+from api.models import Base, User, Source
 
 Base.metadata.create_all(bind=engine)
 

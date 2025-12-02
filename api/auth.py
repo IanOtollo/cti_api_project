@@ -1,8 +1,8 @@
 import os
 from fastapi import Header, HTTPException, Depends
 from sqlalchemy.orm import Session
-from database import SessionLocal
-from models import User
+from api.database import SessionLocal
+from api.models import User
 
 def get_db():
     db = SessionLocal()

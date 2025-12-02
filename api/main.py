@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-from database import SessionLocal
-from models import Source, User
-from auth import verify_api_key
+from api.database import SessionLocal
+from api.models import Source, User
+from api.auth import verify_api_key
 
 app = FastAPI()
 
